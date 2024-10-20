@@ -1,48 +1,50 @@
-let firstNumber;
-let secondNumber;
+let firstOperand;
+let secondOperand;
 let operator;
 
-const display = document.querySelector('.display');
-
-const buttons = document.querySelectorAll('.button');
-
-buttons.forEach(button => button.addEventListener("click", (e) => buttonClicked(e)));
-
-function buttonClicked(e){
-    console.log(e);
-}
-
-function add(num1, num2){
-    return num1 + num2;
-}
-
-function subtract(num1, num2){
-    return num1 - num2;
-}
-
-function multiply(num1, num2){
-    return num1 * num2;
-}
-
-function divide(num1, num2){
-    return num1/num2;
-}
-
 function operate(num1, num2, operator){
-    let result;
     switch(operator){
         case '+':
-        result = add(num1, num2);
-        break;
+            return num1+num2;
         case '-':
-        result = subtract(num1, num2);
-        break;
+            return num1-num2;
         case '*':
-        result = multiply(num1, num2);
-        break;
+            return num1*num2;
+        case '/':
+            if(num2 === 0) return;
+            return num1/num2;
         default:
-        result = divide(num1, num2);
-        break;
+            return null;
     }
-    return result;
+}
+
+let numberButtons = document.querySelectorAll('[data-number]');
+const operatorButtons = document.querySelectorAll('[data-operator]');
+const currentScreen = document.getElementById('currentOperationScreen');
+const lastScreen = document.getElementById('lastOperationScreen');
+const equalBtn = document.getElementById('equalsBtn');
+
+numberButtons.forEach((button) => button.addEventListener("click", (e)=> addNumber(e)));
+operatorButtons.forEach((button) => button.addEventListener("click", (e)=> addOperator(e)));
+
+
+
+function addNumber(e){
+    currentScreen.textContent += e.target.textContent;
+}
+
+function addOperator(e){
+    currentScreen.textContent += " " + e.target.textContent + " ";
+}
+
+equalBtn.addEventListener("click", evaluate);
+
+function evaluate(){
+    let elements = currentScreen.textContent.split(' ');
+    if(elements.length > 3){
+        alert('ERROR');
+        currentScreen.textContent = '';
+    }
+    lastScreen.textContent = currentScreen.textContent;
+    currentScreen.textContent = operate(Number(elements[0]), Number(elements[2]), elements[1]);
 }
