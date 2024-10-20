@@ -23,9 +23,12 @@ const operatorButtons = document.querySelectorAll('[data-operator]');
 const currentScreen = document.getElementById('currentOperationScreen');
 const lastScreen = document.getElementById('lastOperationScreen');
 const equalBtn = document.getElementById('equalsBtn');
+const deleteBtn = document.getElementById('deleteBtn');
+const clearBtn = document.getElementById('clearBtn');
 
-numberButtons.forEach((button) => button.addEventListener("click", (e)=> addNumber(e)));
-operatorButtons.forEach((button) => button.addEventListener("click", (e)=> addOperator(e)));
+
+numberButtons.forEach((button) => button.addEventListener("click", (e) => addNumber(e)));
+operatorButtons.forEach((button) => button.addEventListener("click", (e) => addOperator(e)));
 
 
 
@@ -47,4 +50,17 @@ function evaluate(){
     }
     lastScreen.textContent = currentScreen.textContent;
     currentScreen.textContent = operate(Number(elements[0]), Number(elements[2]), elements[1]);
+}
+
+clearBtn.addEventListener("click", clear);
+
+function clear(){
+    currentScreen.textContent = '';
+    lastScreen.textContent = '';
+}
+
+deleteBtn.addEventListener("click", deleteLast);
+
+function deleteLast(){
+    currentScreen.textContent = currentScreen.textContent.toString().slice(0, -1);
 }
