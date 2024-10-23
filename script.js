@@ -1,66 +1,21 @@
-let firstOperand;
-let secondOperand;
-let operator;
-
-function operate(num1, num2, operator){
-    switch(operator){
-        case '+':
-            return num1+num2;
-        case '-':
-            return num1-num2;
-        case '*':
-            return num1*num2;
-        case '/':
-            if(num2 === 0) return;
-            return num1/num2;
-        default:
-            return null;
-    }
-}
-
 let numberButtons = document.querySelectorAll('[data-number]');
-const operatorButtons = document.querySelectorAll('[data-operator]');
-const currentScreen = document.getElementById('currentOperationScreen');
-const lastScreen = document.getElementById('lastOperationScreen');
-const equalBtn = document.getElementById('equalsBtn');
-const deleteBtn = document.getElementById('deleteBtn');
-const clearBtn = document.getElementById('clearBtn');
 
+let operatorButtons = document.querySelectorAll('[data-operator]');
 
-numberButtons.forEach((button) => button.addEventListener("click", (e) => addNumber(e)));
-operatorButtons.forEach((button) => button.addEventListener("click", (e) => addOperator(e)));
+let display = document.getElementById('currentOperationScreen');
 
+numberButtons.forEach(button => button.addEventListener("click", (event)=> appendValue(event.target.textContent)))
 
+operatorButtons.forEach(button => button.addEventListener("click", (event)=> appendOperator(event.target.textContent)))
 
-function addNumber(e){
-    currentScreen.textContent += e.target.textContent;
+function appendValue(value){
+    display.textContent += value;
 }
 
-function addOperator(e){
-    currentScreen.textContent += " " + e.target.textContent + " ";
-}
-
-equalBtn.addEventListener("click", evaluate);
-
-function evaluate(){
-    let elements = currentScreen.textContent.split(' ');
-    if(elements.length > 3){
-        alert('ERROR');
-        currentScreen.textContent = '';
+function appendOperator(operator){
+    if(!isNaN(Number(display.textContent))){
+        display.textContent += operator;
     }
-    lastScreen.textContent = currentScreen.textContent;
-    currentScreen.textContent = operate(Number(elements[0]), Number(elements[2]), elements[1]);
 }
 
-clearBtn.addEventListener("click", clear);
-
-function clear(){
-    currentScreen.textContent = '';
-    lastScreen.textContent = '';
-}
-
-deleteBtn.addEventListener("click", deleteLast);
-
-function deleteLast(){
-    currentScreen.textContent = currentScreen.textContent.toString().slice(0, -1);
-}
+// append all pressed numbers in display if it doesn't already contain an operator and then split the display value, based on the operator, and the do the calculation and return it
