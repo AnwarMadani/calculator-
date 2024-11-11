@@ -48,7 +48,7 @@ body{
     grid-template-rows: repeat(5, 1fr);
 }
 
-.button{
+.btn{
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -58,11 +58,11 @@ body{
     background-color: white;
 }
 
-.button:hover{
+.btn:hover{
     background-color: rgb(219, 219, 219);
 }
 
-.button:active{
+.btn:active{
     background-color: black;
     color: white;
 }
